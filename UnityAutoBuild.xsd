@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://schema.fixstudio.pro/UnityAutoBuild/v1"
+    elementFormDefault="qualified">
+
+  <xs:element name="UnityAutoBuild">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="CheckoutID" type="xs:string"/>
+        <xs:element name="Targets" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="Config" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Bundler" minOccurs="0" maxOccurs="1">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="ZIP"/>
+                          <xs:enumeration value="TAR.XZ"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Prop" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="name" use="required">
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="Development"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="value" type="xs:boolean" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="base">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="WIN_X86"/>
+                        <xs:enumeration value="WIN_X64"/>
+                        <xs:enumeration value="LINUX"/>
+                        <xs:enumeration value="LINUX_HEADLESS"/>
+                        <xs:enumeration value="ANDROID"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
+                  <xs:attribute name="path" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
