@@ -1,5 +1,6 @@
 ﻿#if UNITY_EDITOR
 using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 
@@ -15,6 +16,7 @@ namespace FIX.UnityAutoBuild {
 
             try {
                 var m = LongOptParser.ParseLongOpts(Environment.GetCommandLineArgs());
+                var scene_list = new List<string>();
                 Func<string, string> get_req_key = (string k) => {
                     string ret;
 
@@ -70,7 +72,7 @@ namespace FIX.UnityAutoBuild {
                 var report = BuildPipeline.BuildPlayer(opt);
 
                 Console.Out.WriteLine("Build took {0:F3}s",
-                   report.summary.buildEndedAt - report.summary.buildStartedAt);
+                   (report.summary.buildEndedAt - report.summary.buildStartedAt).Seconds);
 
                 if (report.summary.result == BuildResult.Succeeded) {
                     EditorApplication.Exit(0);

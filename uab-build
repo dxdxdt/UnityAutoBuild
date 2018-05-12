@@ -23,37 +23,38 @@ for i in "${UAB_CONFIG_ARR[@]}"; do
     echo "Building '$UAB_T_ID' ..."
 
     # TODO: Use $UAB_T_PROP
-    "$UAB_EXEC_UNITY" -quit -batchmode -nographics -logFile "$UAB_PATH/$UAB_BUILDS/$UAB_T_ID.log"\
+    "$UAB_EXEC_UNITY" -batchmode -nographics -logFile "$UAB_PATH/$UAB_BUILDS/$UAB_T_ID.log"\
         -projectPath "$UAB_PATH/$UAB_WD/$UAB_PROJECT_PATH" -executeMethod FIX.UnityAutoBuild.BuildEntry.Run\
         "--fix.uab.base=$UAB_T_BASE" "--fix.uab.path=$UAB_PATH/$UAB_BUILDS/$UAB_T_OUT"
+
     if [ $? -eq 0 ]; then
-        UAB_BUILD_OK="true"
+        UAB_BUILD_OK="1"
 
         if [ ! -z "$UAB_T_BUNDLER" ]; then
             outdir="$(dirname "$UAB_BUILDS/$UAB_T_OUT")"
 
             if [ "$outdir" == "$UAB_BUILDS" ]; then
                 uab_error "FIXME: Bunder specified on single file output target!"
-                UAB_BUILD_OK="false"
+                UAB_BUILD_OK="0"
             elif [ -d "$outdir" ]; then
                 basedir="$(basename "$outdir")"
 
                 cd "$(dirname "$outdir")"
                 "uab_bundler_$UAB_T_BUNDLER" "$basedir" && rm -rf "$basedir"
                 if [ $? -ne 0 ]; then
-                    UAB_BUILD_OK="false"
+                    UAB_BUILD_OK="0"
                 fi
                 cd "$UAB_PATH"
             else
                 uab_error "Bunder specified, but no output directory created."
-                UAB_BUILD_OK="false"
+                UAB_BUILD_OK="0"
             fi
         fi
     else
-        UAB_BUILD_OK="false"
+        UAB_BUILD_OK="0"
     fi
 
-    if [ "$UAB_BUILD_OK" ]; then
+    if [ "$UAB_BUILD_OK" -ne 0 ]; then
         UAB_BUILD_MAP["$i"]="OK"
         let UAB_CNT_OK++
     else
@@ -62,9 +63,10 @@ for i in "${UAB_CONFIG_ARR[@]}"; do
     fi
 done
 
-echo "========================================"
+echo "==================== DONE ===================="
 for i in "${!UAB_BUILD_MAP[@]}"; do
     echo "* $i: ${UAB_BUILD_MAP["$i"]}"
 done
-echo "OK: $UAB_BUILD_OK"
+echo "OK:   $UAB_CNT_OK"
 echo "FAIL: $UAB_CNT_FAIL"
+echo "=============================================="
