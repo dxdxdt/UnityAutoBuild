@@ -22,10 +22,10 @@ for i in "${UAB_CONFIG_ARR[@]}"; do
 
     echo "Building '$UAB_T_ID' ..."
 
-    # TODO: Use $UAB_T_PROP
     "$UAB_EXEC_UNITY" -batchmode -nographics -logFile "$UAB_PATH/$UAB_BUILDS/$UAB_T_ID.log"\
         -projectPath "$UAB_PATH/$UAB_WD/$UAB_PROJECT_PATH" -executeMethod FIX.UnityAutoBuild.BuildEntry.Run\
-        "--fix.uab.base=$UAB_T_BASE" "--fix.uab.path=$UAB_PATH/$UAB_BUILDS/$UAB_T_OUT"
+        "--fix.uab.base=$UAB_T_BASE" "--fix.uab.path=$UAB_PATH/$UAB_BUILDS/$UAB_T_OUT"\
+        $UAB_T_PROP
 
     if [ $? -eq 0 ]; then
         UAB_BUILD_OK="1"

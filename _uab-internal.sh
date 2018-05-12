@@ -27,10 +27,6 @@ UAB_GIT_DIR="git"
 UAB_WD="wd"
 UAB_BUILDS="builds"
 
-declare -a UAB_CONFIG_ARR
-declare UAB_T_ID UAB_T_BASE UAB_T_OUT UAB_T_BUNDLER
-declare -A UAB_T_PROP
-
 function uab_dropif_failed () {
     EC="$?"
 
@@ -79,7 +75,14 @@ function uab_load_conf () {
         UAB_T_BUNDLER=""
     fi
 
-    # TODO: Set $UAB_T_PROP
+    UAB_T_PROP=""
+
+    cnt="$("$UAB_EXEC_XMLLINT" --xpath "count(/*[local-name()='UnityAutoBuild'][1]/*[local-name()='Targets']/*[local-name()='Config'][@id='$1']/*[local-name()='Prop'])" "$UAB_CONF_XML")"
+    for (( i = 1; i <= $cnt; i++ )); do
+        k="$("$UAB_EXEC_XMLLINT" --xpath "string(/*[local-name()='UnityAutoBuild'][1]/*[local-name()='Targets']/*[local-name()='Config'][@id='$1']/*[local-name()='Prop'][$i]/@name)" "$UAB_CONF_XML")"
+        v="$("$UAB_EXEC_XMLLINT" --xpath "string(/*[local-name()='UnityAutoBuild'][1]/*[local-name()='Targets']/*[local-name()='Config'][@id='$1']/*[local-name()='Prop'][$i]/@value)" "$UAB_CONF_XML")"
+        UAB_T_PROP="$UAB_T_PROP --fix.uab.build.prop.$k=$v"
+    done
 }
 
 ####################

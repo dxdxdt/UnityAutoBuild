@@ -18,7 +18,7 @@
 
     <!--
     <Config id="android_debug" base="ANDROID" out="out.debug.apk">
-      <Prop id="Development" value="true" />
+      <Prop name="Development" value="true" />
     </Config>
     -->
   </Targets>
