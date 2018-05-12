@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <UnityAutoBuild
-  xmlns="http://schema.fixstudio.pro/UnityAutoBuild/v1"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  xmlns="http://schema.fixstudio.pro/UnityAutoBuild/v1">
 
-  <CheckoutID>master</CheckoutID>
+  <FetchSpec>master</FetchSpec>
+  <ProjectPath></ProjectPath>
   <Targets>
-    <Config base="WIN_X86" path="out.win_x86">
+    <Config id="win" base="WIN_X86" out="out.win_x86">
       <Bundler>ZIP</Bundler>
     </Config>
-    <Config base="LINUX" path="out.linux">
-      <Bundler>TAR.XZ</Bundler>
+    <Config id="linux" base="LINUX" out="out.linux">
+      <Bundler>TAR_XZ</Bundler>
     </Config>
-    <Config base="LINUX_HEADLESS" path="out.server">
-      <Bundler>TAR.XZ</Bundler>
+    <Config id="server" base="LINUX_HEADLESS" out="out.server">
+      <Bundler>TAR_XZ</Bundler>
     </Config>
-    <Config base="ANDROID" path="out.apk" />
+    <Config id="android" base="ANDROID" out="out.apk" />
 
-    <Config base="ANDROID" path="out.debug.apk">
+    <!--
+    <Config name="android_debug" base="ANDROID" out="out.debug.apk">
       <Prop name="Development" value="true" />
     </Config>
+    -->
   </Targets>
 </UnityAutoBuild>

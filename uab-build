@@ -1,0 +1,61 @@
+#!/bin/bash
+source "$(dirname "$0")/_uab-internal.sh"
+
+uab_validate_conf && uab_load_init_conf
+uab_dropif_failed
+
+rm -rf "$UAB_WD" "$UAB_BUILDS" && mkdir "$UAB_WD" "$UAB_BUILDS"
+uab_dropif_failed
+
+git -C "$UAB_WD" "--git-dir=$GIT_DIR" "--work-tree=$GIT_WORK_TREE" fetch origin "$UAB_FETCH_SPEC" &&\
+    git -C "$UAB_WD" "--git-dir=$GIT_DIR" "--work-tree=$GIT_WORK_TREE" reset --hard FETCH_HEAD
+uab_dropif_failed
+
+UAB_CNT_OK=0
+UAB_CNT_FAIL=0
+declare UAB_BUILD_OK
+declare -A UAB_BUILD_MAP
+
+for i in "${UAB_CONFIG_ARR[@]}"; do
+    uab_load_conf "$i"
+    uab_dropif_failed
+
+    # TODO: Use $UAB_T_PROP
+    "$UAB_EXEC_UNITY" -quit -batchmode -nographics -logFile /dev/stdout\
+        -projectPath "$UAB_WD/$UAB_PROJECT_PATH" -executeMethod FIX.UnityAutoBuild.BuildEntry.Run\
+        "--fix.uab.base=$UAB_T_BASE" "--fix.uab.path=$UAB_PATH/$UAB_BUILDS/$UAB_T_OUT"
+    if [ $? -eq 0 ]; then
+        UAB_BUILD_OK="true"
+
+        if [ ! -z "$UAB_T_BUNDLER" ]; then
+            if [ -d "$UAB_BUILDS/$UAB_T_OUT" ]; then
+                cd $UAB_BUILDS
+                "uab_bundler_$UAB_T_BUNDLER" "$UAB_T_OUT" && rm -rf "$UAB_T_OUT"
+                if [ $? -ne 0 ]; then
+                    UAB_BUILD_OK="false"
+                fi
+                cd ..
+            else
+                uab_error "Bunder specified, but no output directory created."
+                UAB_BUILD_OK="false"
+            fi
+        fi
+    else
+        UAB_BUILD_OK="false"
+    fi
+
+    if [ "$UAB_BUILD_OK" ]; then
+        UAB_BUILD_MAP["$i"]="OK"
+        let UAB_CNT_OK++
+    else
+        UAB_BUILD_MAP["$i"]="FAIL"
+        let UAB_CNT_FAIL++
+    fi
+done
+
+uab_error "========================================"
+for i in "${!UAB_BUILD_MAP[@]}"; do
+    uab_error "* $i: ${UAB_BUILD_MAP["$i"]}"
+done
+uab_error "OK: $UAB_BUILD_OK"
+uab_error "FAIL: $UAB_CNT_FAIL"

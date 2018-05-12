@@ -7,8 +7,9 @@
   <xs:element name="UnityAutoBuild">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="CheckoutID" type="xs:string"/>
-        <xs:element name="Targets" minOccurs="1" maxOccurs="1">
+        <xs:element name="FetchSpec" type="xs:string"/>
+        <xs:element name="ProjectPath" type="xs:string"/>
+        <xs:element name="Targets">
           <xs:complexType>
             <xs:sequence minOccurs="0" maxOccurs="unbounded">
               <xs:element name="Config" minOccurs="1" maxOccurs="unbounded">
@@ -18,7 +19,7 @@
                       <xs:simpleType>
                         <xs:restriction base="xs:string">
                           <xs:enumeration value="ZIP"/>
-                          <xs:enumeration value="TAR.XZ"/>
+                          <xs:enumeration value="TAR_XZ"/>
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:element>
@@ -35,7 +36,8 @@
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
-                  <xs:attribute name="base">
+                  <xs:attribute name="id" type="xs:string" use="required"/>
+                  <xs:attribute name="base" use="required">
                     <xs:simpleType>
                       <xs:restriction base="xs:string">
                         <xs:enumeration value="WIN_X86"/>
@@ -46,7 +48,7 @@
                       </xs:restriction>
                     </xs:simpleType>
                   </xs:attribute>
-                  <xs:attribute name="path" type="xs:string"/>
+                  <xs:attribute name="out" type="xs:string"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
