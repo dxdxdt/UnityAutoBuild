@@ -38,6 +38,13 @@ namespace FIX.UnityAutoBuild {
                 }
 
                 opt.locationPathName = get_req_key("fix.uab.path");
+                foreach (var s in EditorBuildSettings.scenes) {
+                    if (s.enabled) {
+                        scene_list.Add(s.path);
+                    }
+                }
+                opt.scenes = scene_list.ToArray();
+
 
                 foreach (var p in m) {
                     if (p.Key.StartsWith("fix.uab.build.prop.")) {
@@ -62,8 +69,8 @@ namespace FIX.UnityAutoBuild {
             try {
                 var report = BuildPipeline.BuildPlayer(opt);
 
-                //Console.Out.WriteLine("Build took {0:F3}s",
-                //    report.summary.buildEndedAt - report.summary.buildStartedAt);
+                Console.Out.WriteLine("Build took {0:F3}s",
+                   report.summary.buildEndedAt - report.summary.buildStartedAt);
 
                 if (report.summary.result == BuildResult.Succeeded) {
                     EditorApplication.Exit(0);

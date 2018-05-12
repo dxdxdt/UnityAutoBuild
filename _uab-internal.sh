@@ -23,6 +23,7 @@ UAB_SRC_DIR="$(dirname "${BASH_SOURCE[0]}")"
 UAB_SAMPLE_CONF="$UAB_SRC_DIR/UnityAutoBuild.xml"
 UAB_CONF_SCHEMA="$UAB_SRC_DIR/UnityAutoBuild.xsd"
 UAB_PATH="$(pwd)"
+UAB_GIT_DIR="git"
 UAB_WD="wd"
 UAB_BUILDS="builds"
 

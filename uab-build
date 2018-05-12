@@ -7,8 +7,8 @@ uab_dropif_failed
 rm -rf "$UAB_WD" "$UAB_BUILDS" && mkdir "$UAB_WD" "$UAB_BUILDS"
 uab_dropif_failed
 
-git -C "$UAB_WD" "--git-dir=$GIT_DIR" "--work-tree=$GIT_WORK_TREE" fetch origin "$UAB_FETCH_SPEC" &&\
-    git -C "$UAB_WD" "--git-dir=$GIT_DIR" "--work-tree=$GIT_WORK_TREE" reset --hard FETCH_HEAD
+git -C "$UAB_WD" "--git-dir=../$UAB_GIT_DIR" "--work-tree=." fetch -p origin "$UAB_FETCH_SPEC" &&\
+    git -C "$UAB_WD" "--git-dir=../$UAB_GIT_DIR" "--work-tree=." reset --hard FETCH_HEAD
 uab_dropif_failed
 
 UAB_CNT_OK=0
@@ -20,21 +20,30 @@ for i in "${UAB_CONFIG_ARR[@]}"; do
     uab_load_conf "$i"
     uab_dropif_failed
 
+    echo "Building '$UAB_T_ID' ..."
+
     # TODO: Use $UAB_T_PROP
-    "$UAB_EXEC_UNITY" -quit -batchmode -nographics -logFile /dev/stdout\
-        -projectPath "$UAB_WD/$UAB_PROJECT_PATH" -executeMethod FIX.UnityAutoBuild.BuildEntry.Run\
+    "$UAB_EXEC_UNITY" -quit -batchmode -nographics -logFile "$UAB_PATH/$UAB_BUILDS/$UAB_T_ID.log"\
+        -projectPath "$UAB_PATH/$UAB_WD/$UAB_PROJECT_PATH" -executeMethod FIX.UnityAutoBuild.BuildEntry.Run\
         "--fix.uab.base=$UAB_T_BASE" "--fix.uab.path=$UAB_PATH/$UAB_BUILDS/$UAB_T_OUT"
     if [ $? -eq 0 ]; then
         UAB_BUILD_OK="true"
 
         if [ ! -z "$UAB_T_BUNDLER" ]; then
-            if [ -d "$UAB_BUILDS/$UAB_T_OUT" ]; then
-                cd $UAB_BUILDS
-                "uab_bundler_$UAB_T_BUNDLER" "$UAB_T_OUT" && rm -rf "$UAB_T_OUT"
+            outdir="$(dirname "$UAB_BUILDS/$UAB_T_OUT")"
+
+            if [ "$outdir" == "$UAB_BUILDS" ]; then
+                uab_error "FIXME: Bunder specified on single file output target!"
+                UAB_BUILD_OK="false"
+            elif [ -d "$outdir" ]; then
+                basedir="$(basename "$outdir")"
+
+                cd "$(dirname "$outdir")"
+                "uab_bundler_$UAB_T_BUNDLER" "$basedir" && rm -rf "$basedir"
                 if [ $? -ne 0 ]; then
                     UAB_BUILD_OK="false"
                 fi
-                cd ..
+                cd "$UAB_PATH"
             else
                 uab_error "Bunder specified, but no output directory created."
                 UAB_BUILD_OK="false"
@@ -53,9 +62,9 @@ for i in "${UAB_CONFIG_ARR[@]}"; do
     fi
 done
 
-uab_error "========================================"
+echo "========================================"
 for i in "${!UAB_BUILD_MAP[@]}"; do
-    uab_error "* $i: ${UAB_BUILD_MAP["$i"]}"
+    echo "* $i: ${UAB_BUILD_MAP["$i"]}"
 done
-uab_error "OK: $UAB_BUILD_OK"
-uab_error "FAIL: $UAB_CNT_FAIL"
+echo "OK: $UAB_BUILD_OK"
+echo "FAIL: $UAB_CNT_FAIL"

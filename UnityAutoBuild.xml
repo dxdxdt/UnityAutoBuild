@@ -5,13 +5,13 @@
   <FetchSpec>master</FetchSpec>
   <ProjectPath></ProjectPath>
   <Targets>
-    <Config id="win" base="WIN_X86" out="out.win_x86">
+    <Config id="win" base="WIN_X86" out="win/out.exe">
       <Bundler>ZIP</Bundler>
     </Config>
-    <Config id="linux" base="LINUX" out="out.linux">
+    <Config id="linux" base="LINUX" out="linux/out">
       <Bundler>TAR_XZ</Bundler>
     </Config>
-    <Config id="server" base="LINUX_HEADLESS" out="out.server">
+    <Config id="server" base="LINUX_HEADLESS" out="server/out">
       <Bundler>TAR_XZ</Bundler>
     </Config>
     <Config id="android" base="ANDROID" out="out.apk" />
