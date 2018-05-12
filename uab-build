@@ -55,17 +55,17 @@ for i in "${UAB_CONFIG_ARR[@]}"; do
     fi
 
     if [ "$UAB_BUILD_OK" -ne 0 ]; then
-        UAB_BUILD_MAP["$i"]="OK"
+        UAB_BUILD_MAP[$UAB_T_ID]="OK"
         let UAB_CNT_OK++
     else
-        UAB_BUILD_MAP["$i"]="FAIL"
+        UAB_BUILD_MAP[$UAB_T_ID]="FAIL"
         let UAB_CNT_FAIL++
     fi
 done
 
 echo "==================== DONE ===================="
 for i in "${!UAB_BUILD_MAP[@]}"; do
-    echo "* $i: ${UAB_BUILD_MAP["$i"]}"
+    echo "* $i: ${UAB_BUILD_MAP[$i]}"
 done
 echo "OK:   $UAB_CNT_OK"
 echo "FAIL: $UAB_CNT_FAIL"
