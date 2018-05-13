@@ -7,9 +7,11 @@ uab_dropif_failed 1
 rm -rf "$UAB_WD" "$UAB_BUILDS" && mkdir "$UAB_WD" "$UAB_BUILDS"
 uab_dropif_failed 1
 
-git -C "$UAB_WD" "--git-dir=../$UAB_GIT_DIR" "--work-tree=." fetch -p origin "$UAB_FETCH_SPEC" &&\
-    git -C "$UAB_WD" "--git-dir=../$UAB_GIT_DIR" "--work-tree=." reset --hard FETCH_HEAD
+cd "$UAB_WD"
+git "--git-dir=../$UAB_GIT_DIR" "--work-tree=." fetch -p origin "$UAB_FETCH_SPEC" &&\
+    git "--git-dir=../$UAB_GIT_DIR" "--work-tree=." reset --hard FETCH_HEAD
 uab_dropif_failed 1
+cd ..
 
 UAB_CNT_OK=0
 UAB_CNT_FAIL=0
