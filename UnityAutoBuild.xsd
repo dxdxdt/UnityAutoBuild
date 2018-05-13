@@ -45,6 +45,8 @@
                         <xs:enumeration value="LINUX"/>
                         <xs:enumeration value="LINUX_HEADLESS"/>
                         <xs:enumeration value="ANDROID"/>
+                        <xs:enumeration value="IOS"/>
+                        <xs:enumeration value="OSX"/>
                       </xs:restriction>
                     </xs:simpleType>
                   </xs:attribute>

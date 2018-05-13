@@ -5,6 +5,7 @@
   <FetchSpec>master</FetchSpec>
   <ProjectPath></ProjectPath>
   <Targets>
+    <!--
     <Config id="win" base="WIN_X86" out="win/out.exe">
       <Bundler>ZIP</Bundler>
     </Config>
@@ -15,8 +16,6 @@
       <Bundler>TAR_XZ</Bundler>
     </Config>
     <Config id="android" base="ANDROID" out="out.apk" />
-
-    <!--
     <Config id="android_debug" base="ANDROID" out="out.debug.apk">
       <Prop name="Development" value="true" />
     </Config>

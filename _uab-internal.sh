@@ -31,13 +31,8 @@ function uab_dropif_failed () {
     EC="$?"
 
     if [ $EC -ne 0 ]; then
-        exit $EC
+        exit $1
     fi
-}
-
-function uab_die () {
-    echo "$2" >& 2
-    exit $1
 }
 
 function uab_error () {

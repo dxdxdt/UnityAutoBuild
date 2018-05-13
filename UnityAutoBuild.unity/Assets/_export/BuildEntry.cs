@@ -36,6 +36,8 @@ namespace FIX.UnityAutoBuild {
                     case "LINUX": opt = BuildConfig.LINUX; break;
                     case "LINUX_HEADLESS": opt = BuildConfig.LINUX_HEADLESS; break;
                     case "ANDROID": opt = BuildConfig.ANDROID; break;
+                    case "IOS": opt = BuildConfig.IOS; break;
+                    case "OSX": opt = BuildConfig.OSX; break;
                     default: throw new Exception();
                 }
 

@@ -2,14 +2,14 @@
 source "$(dirname "$0")/_uab-internal.sh"
 
 uab_validate_conf && uab_load_init_conf
-uab_dropif_failed
+uab_dropif_failed 1
 
 rm -rf "$UAB_WD" "$UAB_BUILDS" && mkdir "$UAB_WD" "$UAB_BUILDS"
-uab_dropif_failed
+uab_dropif_failed 1
 
 git -C "$UAB_WD" "--git-dir=../$UAB_GIT_DIR" "--work-tree=." fetch -p origin "$UAB_FETCH_SPEC" &&\
     git -C "$UAB_WD" "--git-dir=../$UAB_GIT_DIR" "--work-tree=." reset --hard FETCH_HEAD
-uab_dropif_failed
+uab_dropif_failed 1
 
 UAB_CNT_OK=0
 UAB_CNT_FAIL=0
@@ -18,7 +18,7 @@ declare -A UAB_BUILD_MAP
 
 for i in "${UAB_CONFIG_ARR[@]}"; do
     uab_load_conf "$i"
-    uab_dropif_failed
+    uab_dropif_failed 1
 
     echo "Building '$UAB_T_ID' ..."
 
@@ -70,3 +70,10 @@ done
 echo "OK:   $UAB_CNT_OK"
 echo "FAIL: $UAB_CNT_FAIL"
 echo "=============================================="
+
+if [ "$UAB_CNT_FAIL" -eq 0 ] && [ "$UAB_CNT_OK" -eq 0 ]; then
+    exit 2
+elif [ "$UAB_CNT_FAIL" -ne 0 ]; then
+    exit 1
+fi
+exit 0

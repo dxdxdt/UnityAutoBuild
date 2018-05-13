@@ -19,9 +19,16 @@ namespace FIX.UnityAutoBuild {
             target = BuildTarget.StandaloneLinux64,
             options = BuildOptions.EnableHeadlessMode
         };
-
         public static readonly BuildPlayerOptions ANDROID = new BuildPlayerOptions() {
             target = BuildTarget.Android,
+            options = BuildOptions.None
+        };
+        public static readonly BuildPlayerOptions IOS = new BuildPlayerOptions() {
+            target = BuildTarget.iOS,
+            options = BuildOptions.None
+        };
+        public static readonly BuildPlayerOptions OSX = new BuildPlayerOptions() {
+            target = BuildTarget.StandaloneOSX,
             options = BuildOptions.None
         };
     }
