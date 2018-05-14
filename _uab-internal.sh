@@ -14,6 +14,9 @@ fi
 if [ -z "$UAB_EXEC_ZIP" ]; then
     UAB_EXEC_ZIP="zip"
 fi
+if [ -z "$UAB_EXEC_XZ" ]; then
+    UAB_EXEC_XZ="xz"
+fi
 if [ -z "$UAB_EXEC_TAR" ]; then
     UAB_EXEC_TAR="tar"
 fi
@@ -88,5 +91,9 @@ function uab_bundler_ZIP () {
 }
 
 function uab_bundler_TAR_XZ () {
-    "$UAB_EXEC_TAR" cf "$1.tar.xz" "$1"
+    "$UAB_EXEC_TAR" cf - "$1" | "$UAB_EXEC_XZ" -T0 - > "$1.tar.xz"
+}
+
+function uab_bundler_TAR_GZ () {
+    "$UAB_EXEC_TAR" czf "$1.tar.gz" "$1"
 }

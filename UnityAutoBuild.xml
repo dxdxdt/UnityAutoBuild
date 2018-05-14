@@ -10,7 +10,7 @@
       <Bundler>ZIP</Bundler>
     </Config>
     <Config id="linux" base="LINUX" out="linux/out">
-      <Bundler>TAR_XZ</Bundler>
+      <Bundler>TAR_GZ</Bundler>
     </Config>
     <Config id="server" base="LINUX_HEADLESS" out="server/out">
       <Bundler>TAR_XZ</Bundler>
