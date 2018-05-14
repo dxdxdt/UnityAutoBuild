@@ -5,7 +5,7 @@ in the XML config file.
 
 ## Overview
 The script manages a working directory for the project much like git does.
-In the working dirctory, the script performs `git fetch` and `git reset` to the
+In the working directory, the script performs `git fetch` and `git reset` to the
 specified git spec(tag/branch/commit-id) and then Unity build commands.
 After Unity build commands are executed, the script proceeds to compress
 the output directories as needed.
@@ -24,7 +24,7 @@ This project is designed for Unix-savvy techies and not very user-friendly.
 If you are not even familiar with CUI, this is not your cup of tea.
 
 ## Walk-through
-This script should run on all Unix-like systems that has bash.
+This script should run on all Unix-like systems that have bash.
 
 If you're planning to set up the environment on linux, you can get the
 **linux version** of Unity from this link.
@@ -103,8 +103,8 @@ Examples: `sub/unity`, `unity_project`
     `/UnityAutoBuild.unity/Assets/_export/BuildConfig.cs`. From the base configs,
     you can customise targets, just like ticking options checkboxes on
     the 'BuildSettings' Editor dialog by placing `<Prop>` tags(See below).
-    * `out`: Output path. This is the path to the output binary, not the output
-    directory(if the target generates output files in a subdirectory).
+    * `out`: Output path. **This is the path to the output binary, not the output
+    directory**(if the target generates output files in a subdirectory).
     Definition of "output path" by Unity is rather ambiguous.
     See [the appendix](#appendix-locationPathName)
     for more detail.
@@ -119,7 +119,7 @@ Examples: `sub/unity`, `unity_project`
     some of them are meaningful only when building on GUI mode.
 
 ### Run the Command!
-When everything is set, run command:
+You are now all set! Run command:
 ```
 uab-build
 ```
@@ -135,7 +135,7 @@ What happens when this command is issued?
 1. Issue the Unity build commands one by one
 
 For the third part, it is complicated as to how this process works. You might as
-well read the code for explanation.
+well read the code for an explanation.
 
 Yes, the script deletes the checked out Unity project directory, deleting all
 caches every time. **This is intentional**. Among the goal of the script is to
@@ -149,7 +149,7 @@ linux headless, android) on a **c4.large** type EC2 instance.
 (defined in `_uab-internal.sh`)
 
 * `UAB_CONF_XML`: Path to the config file. You can have several config
-files(other than `UnityAutoBuild.xml` and instruct the script to use one of
+files(other than `UnityAutoBuild.xml`) and instruct the script to use one of
 them like this:
 ```
 UAB_CONF_XML="android-only.xml" uab-build
@@ -174,5 +174,5 @@ output binary. But in the C# API, `locationPathName` is always the path to the
 output binary.
 * When building `LinuxUniversial` target(which is the target of the
 `base="LINUX"` attribute), `locationPathName` represents the prefix of the two
-output binaries. So, notice that `out` attbributes for the linux targets have
+output binaries. So, notice that `out` attribute for the linux targets have
 no file extension.
