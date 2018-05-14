@@ -30,6 +30,18 @@
                           <xs:simpleType>
                             <xs:restriction base="xs:string">
                               <xs:enumeration value="Development"/>
+                              <xs:enumeration value="BuildAdditionalStreamedScenes"/>
+                              <xs:enumeration value="AcceptExternalModificationsToPlayer"/>
+                              <xs:enumeration value="AllowDebugging"/>
+                              <xs:enumeration value="SymlinkLibraries"/>
+                              <xs:enumeration value="UncompressedAssetBundle"/>
+                              <xs:enumeration value="EnableHeadlessMode"/>
+                              <xs:enumeration value="BuildScriptsOnly"/>
+                              <xs:enumeration value="ForceEnableAssertions"/>
+                              <xs:enumeration value="CompressWithLz4"/>
+                              <xs:enumeration value="CompressWithLz4HC"/>
+                              <xs:enumeration value="StrictMode"/>
+                              <xs:enumeration value="IncludeTestAssemblies"/>
                             </xs:restriction>
                           </xs:simpleType>
                         </xs:attribute>
