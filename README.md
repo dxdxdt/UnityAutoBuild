@@ -11,10 +11,10 @@ After Unity build commands are executed, the script proceeds to compress
 the output directories as needed.
 
 In a working directory exist `git` directory and `UnityAutoBuild.xml` file.
-The `git` is a bare git repository the script manages, and the xml file is the
-configuration file that you can use to configure the script's behaviour.
-Note that the main script(`uab-build`) takes no parameter. The script is
-controlled via environment variables and the config XML file.
+The `git` directory is a bare git repository the script manages, and the xml
+file is the configuration file that you can use to configure the script's
+behaviour. Note that the main script(`uab-build`) takes no parameter.
+The script is controlled via environment variables and the config XML file.
 
 It is the user's job to program additional works like copying the output
 binaries or mailing the result.
@@ -40,9 +40,12 @@ such machines is a daunting and tedious task. So, if that's what you're looking
 for, please refer to [the separate documentation](doc/Unity-without-GUI.md).
 
 ### Add Editor Scripts to Unity Project
-For the script to build the Unity project, the editor C# scripts must be present
-in the project. Copy .cs files in `/UnityAutoBuild.unity/Assets/_export` to
-your project.
+For the script to build the Unity project, the editor C# scripts and its
+dependency DLLs must be present in the project. Copy these files to your
+project's asset directory.
+
+* `/UnityAutoBuild.unity/Assets/_export/*.cs`
+* `/UnityAutoBuild.unity/Assets/_modules/*.dll`
 
 ### Packages Required by the Script
 Following tools are used by the script. Ensure that the system running the
@@ -87,7 +90,7 @@ tags, and that should just do. Continue to read the rest of this section for
 advanced use.
 
 The config file is validated before used by the script using
-`UnityAutoBuild.xsd` schema file. If `xmllint` complains, it is worth to read
+`UnityAutoBuild.xsd` file. If `xmllint` complains, it is worth to read
 the schema to understand how the config file can be written.
 Here's the description of the content.
 
