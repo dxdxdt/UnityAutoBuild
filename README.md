@@ -27,7 +27,8 @@ If you are not even familiar with CUI, this is not your cup of tea.
 This script should run on all Unix-like systems that have bash.
 
 If you're planning to set up the environment on linux, you can get the
-**linux version** of Unity from this link.
+**linux version** of Unity from the link.
+
 * https://forum.unity.com/threads/unity-on-linux-release-notes-and-known-issues.350256/
 
 The linux version is currently alpha(and will probably be forever). So, expect
@@ -90,7 +91,7 @@ tags, and that should just do. Continue to read the rest of this section for
 advanced use.
 
 The config file is validated before used by the script using
-`UnityAutoBuild.xsd` file. If `xmllint` complains, it is worth to read
+`UnityAutoBuild.xsd` file. If `xmllint` complains, it is worth reading
 the schema to understand how the config file can be written.
 Here's the description of the content.
 
