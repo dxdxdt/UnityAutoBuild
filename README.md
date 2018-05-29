@@ -52,7 +52,7 @@ project's asset directory.
 Following tools are used by the script. Ensure that the system running the
 script has them.
 ```
-git xmllint zip tar xz gzip
+git libxml2 zip tar xz gzip
 ```
 
 ### Install the Program
