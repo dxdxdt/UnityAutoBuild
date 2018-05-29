@@ -19,6 +19,9 @@
     <Config id="android_debug" base="ANDROID" out="out.debug.apk">
       <Prop name="Development" value="true" />
     </Config>
+    <Config id="ios" base="IOS" out="ios">
+      <Prop name="AutoRunPlayer" value="true" />
+    </Config>
     -->
   </Targets>
 </UnityAutoBuild>
