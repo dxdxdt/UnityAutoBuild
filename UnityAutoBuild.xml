@@ -5,21 +5,40 @@
   <FetchSpec>master</FetchSpec>
   <ProjectPath></ProjectPath>
   <Targets>
-    <!--
+    <!-- Common examples
+    Be sure to rename outputs.
+    -->
+    <!-- Windows 32bit standalone player 'out.exe' in 'win.zip'
     <Config id="win" base="WIN_X86" out="win/out.exe">
       <Bundler>ZIP</Bundler>
     </Config>
+    -->
+    <!-- Linux universial standalone player 'out.x86' and
+    'out.x86_64' in 'linux.tar.gz'
     <Config id="linux" base="LINUX" out="linux/out">
       <Bundler>TAR_GZ</Bundler>
     </Config>
+    -->
+    <!-- Linux headless player 'out' in 'server.tar.xz'
     <Config id="server" base="LINUX_HEADLESS" out="server/out">
       <Bundler>TAR_XZ</Bundler>
     </Config>
+    -->
+    <!-- Android player
     <Config id="android" base="ANDROID" out="out.apk" />
+    -->
+    <!-- Android player (development build)
     <Config id="android_debug" base="ANDROID" out="out.debug.apk">
       <Prop name="Development" value="true" />
     </Config>
+    -->
+    <!-- IOS player. Open 'ios' Xcode project automatically
     <Config id="ios" base="IOS" out="ios">
+      <Prop name="AutoRunPlayer" value="true" />
+    </Config>
+    -->
+    <!-- OSX player. Open 'osx' Xcode project automatically
+    <Config id="osx" base="OSX" out="osx">
       <Prop name="AutoRunPlayer" value="true" />
     </Config>
     -->
